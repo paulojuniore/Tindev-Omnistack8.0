@@ -6,6 +6,7 @@ const DeveloperController = require('./controllers/DeveloperController')
 const LikeController = require('./controllers/LikeController')
 const DislikeController = require('./controllers/DislikeController')
 
+routes.get('/devs', DeveloperController.index)
 routes.post('/devs', DeveloperController.store)
 routes.post('/devs/:devId/likes', LikeController.store)
 routes.post('/devs/:devId/dislikes', DislikeController.store)
