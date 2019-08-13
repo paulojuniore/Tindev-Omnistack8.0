@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import './Main.css'
 
 import logo from '../assets/logo.svg'
@@ -11,76 +12,40 @@ export default function Main({ match }) {
     const [users, setUsers] = useState([])
 
     useEffect(() => {
-        const result = api.get('/devs', {
-            headers: match.params.id
-        })
-        setUsers(result.data)
+        async function loadUsers() {
+            const result = api.get('/devs', {
+                headers: {
+                    user: match.params.id
+                }
+            })
+            setUsers(result.data)
+        }
+        loadUsers()
     }, [match.params.id])
-
+    console.log(users)
     return (
         <div className='main-container'>
-            <img src={logo} alt='' />
+            <Link to='/'>
+                <img src={logo} alt='' />
+            </Link>
             <ul>
-                <li>
-                    <img src='https://avatars2.githubusercontent.com/u/34824189?v=4' alt=''/>
-                    <footer>
-                        <strong>Paulo Júnior</strong>
-                        <p>A nice guy.</p>
-                    </footer>
-                    <div className='buttons'>
-                        <button type='button'>
-                            <img src={like} alt='' />
-                        </button>
-                        <button type='button'>
-                            <img src={dislike} alt='' />
-                        </button>
-                    </div>
-                </li>
-                <li>
-                    <img src='https://avatars2.githubusercontent.com/u/34824189?v=4' alt=''/>
-                    <footer>
-                        <strong>Paulo Júnior</strong>
-                        <p>A nice guy.</p>
-                    </footer>
-                    <div className='buttons'>
-                        <button type='button'>
-                            <img src={like} alt='' />
-                        </button>
-                        <button type='button'>
-                            <img src={dislike} alt='' />
-                        </button>
-                    </div>
-                </li>
-                <li>
-                    <img src='https://avatars2.githubusercontent.com/u/34824189?v=4' alt=''/>
-                    <footer>
-                        <strong>Paulo Júnior</strong>
-                        <p>A nice guy.</p>
-                    </footer>
-                    <div className='buttons'>
-                        <button type='button'>
-                            <img src={like} alt='' />
-                        </button>
-                        <button type='button'>
-                            <img src={dislike} alt='' />
-                        </button>
-                    </div>
-                </li>
-                <li>
-                    <img src='https://avatars2.githubusercontent.com/u/34824189?v=4' alt=''/>
-                    <footer>
-                        <strong>Paulo Júnior</strong>
-                        <p>A nice guy.</p>
-                    </footer>
-                    <div className='buttons'>
-                        <button type='button'>
-                            <img src={like} alt='' />
-                        </button>
-                        <button type='button'>
-                            <img src={dislike} alt='' />
-                        </button>
-                    </div>
-                </li>
+                { users.map(user => (
+                    <li>
+                        <img src={ user.avatar } alt={user.name} />
+                        <footer>
+                            <strong>{ user.name }</strong>
+                            <p>{ user.bio }</p>
+                        </footer>
+                        <div className='buttons'>
+                            <button type='button'>
+                                <img src={like} alt='' />
+                            </button>
+                            <button type='button'>
+                                <img src={dislike} alt='' />
+                            </button>
+                        </div>
+                    </li>
+                )) }
             </ul>
         </div>
     )
