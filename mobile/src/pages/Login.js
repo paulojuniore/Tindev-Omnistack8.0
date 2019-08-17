@@ -1,23 +1,34 @@
 import React from 'react'
-import { View, 
+import { 
+    KeyboardAvoidingView,
+    Platform,
     Text, 
     StyleSheet, 
     Image,
-    TextInput
+    TextInput,
+    TouchableOpacity
 } from 'react-native'
 
 import logo from '../assets/logo.png'
 
 const App = () => {
     return (
-        <View style={styles.container} >
+        <KeyboardAvoidingView
+            behavior="padding"
+            enabled={Platform.OS === "ios"}
+            style={styles.container}
+        >
             <Image source={logo} />
             <TextInput 
+                autoCapitalize="none"
                 placeholder="Digite seu usuário no Github"
                 placeholderTextColor="#999"
                 style={styles.input}
             />
-        </View>
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText}>Entrar</Text>
+            </TouchableOpacity>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -38,6 +49,20 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         marginTop: 20,
         paddingHorizontal: 15,
+    },
+    button: {
+        height: 46,
+        alignSelf: 'stretch',
+        backgroundColor: '#DF4723',
+        borderRadius: 4,
+        marginTop: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    buttonText: {
+        fontWeight: 'bold',
+        color: '#FFF',
+        fontSize: 16,
     }
 })
 
