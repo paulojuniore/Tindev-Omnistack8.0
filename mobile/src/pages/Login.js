@@ -11,7 +11,11 @@ import {
 
 import logo from '../assets/logo.png'
 
-const App = () => {
+const App = ({ navigation }) => {
+    function handleLogin() {
+        navigation.navigate('Main')
+    }
+
     return (
         <KeyboardAvoidingView
             behavior="padding"
@@ -25,7 +29,7 @@ const App = () => {
                 placeholderTextColor="#999"
                 style={styles.input}
             />
-            <TouchableOpacity style={styles.button}>
+            <TouchableOpacity onPress={handleLogin} style={styles.button}>
                 <Text style={styles.buttonText}>Entrar</Text>
             </TouchableOpacity>
         </KeyboardAvoidingView>
