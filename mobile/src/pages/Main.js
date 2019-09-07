@@ -1,9 +1,13 @@
 import React from 'react'
-import { View } from 'react-native'
+import { View, Image } from 'react-native'
+
+import logo from '../assets/logo.png'
 
 const Main = () => {
     return (
-        <View />
+        <View>
+            <Image source={logo} />
+        </View>
     )
 }
 
