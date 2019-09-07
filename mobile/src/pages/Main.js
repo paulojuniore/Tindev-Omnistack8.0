@@ -12,7 +12,7 @@ import logo from '../assets/logo.png'
 const Main = () => {
     return (
         <SafeAreaView style={styles.container}>
-            <Image source={logo} />
+            <Image style={styles.logo} source={logo} />
 
             <View style={styles.cardsContainer}>
                 <View style={styles.card}>
@@ -51,6 +51,10 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5',
         alignItems: 'center',
         justifyContent: 'space-between'
+    },
+
+    logo: {
+        marginTop: 30,
     },
 
     cardsContainer: {
