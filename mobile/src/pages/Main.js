@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { 
     View, 
     SafeAreaView, 
@@ -7,12 +7,47 @@ import {
     Text 
 } from 'react-native'
 
+import api from '../services/api'
+
 import logo from '../assets/logo.png'
 import like from '../assets/like.png'
 import dislike from '../assets/dislike.png'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 
-const Main = () => {
+const Main = ({ navigation }) => {
+    const id = navigation.getParam('user')
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        async function loadUsers() {
+            const result = await api.get('/devs', {
+                headers: {
+                    user: id
+                }
+            })
+            setUsers(result.data)
+        }
+        loadUsers()
+    }, [id])
+
+    async function handleLike(id) {
+        await api.post(`/devs/${id}/likes`, null, {
+            headers: {
+                user: id
+            }
+        })
+        setUsers(users.filter(user => user._id !== id))
+    }
+
+    async function handleDislike(id) {
+        await api.post(`/devs/${id}/dislikes`, null, {
+            headers: {
+                user: id
+            }
+        })
+        setUsers(users.filter(user => user._id !== id))
+    }
+
     return (
         <SafeAreaView style={styles.container}>
             <Image style={styles.logo} source={logo} />
