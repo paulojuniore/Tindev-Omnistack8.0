@@ -8,6 +8,9 @@ import {
 } from 'react-native'
 
 import logo from '../assets/logo.png'
+import like from '../assets/like.png'
+import dislike from '../assets/dislike.png'
+import { TouchableOpacity } from 'react-native-gesture-handler'
 
 const Main = () => {
     return (
@@ -15,7 +18,7 @@ const Main = () => {
             <Image style={styles.logo} source={logo} />
 
             <View style={styles.cardsContainer}>
-                <View style={styles.card}>
+                <View style={[styles.card, { zIndex: 3 }]}>
                     <Image style={styles.avatar} source={{uri: 'https://avatars2.githubusercontent.com/u/34824189?v=4'}} />
                     <View style={styles.footer}>
                         <Text style={styles.name}>Paulo Júnior</Text>
@@ -23,7 +26,7 @@ const Main = () => {
                     </View>
                 </View>
 
-                <View style={styles.card}>
+                <View style={[styles.card, { zIndex: 2 }]}>
                     <Image style={styles.avatar} source={{uri: 'https://avatars2.githubusercontent.com/u/34824189?v=4'}} />
                     <View style={styles.footer}>
                         <Text style={styles.name}>Paulo Júnior</Text>
@@ -31,7 +34,7 @@ const Main = () => {
                     </View>
                 </View>
 
-                <View style={styles.card}>
+                <View style={[styles.card, { zIndex: 1 }]}>
                     <Image style={styles.avatar} source={{uri: 'https://avatars2.githubusercontent.com/u/34824189?v=4'}} />
                     <View style={styles.footer}>
                         <Text style={styles.name}>Paulo Júnior</Text>
@@ -40,7 +43,14 @@ const Main = () => {
                 </View>
             </View>
 
-            <View/>
+            <View style={ styles.buttonContainer }>
+                <TouchableOpacity style={ styles.button }>
+                    <Image source={dislike} />
+                </TouchableOpacity>
+                <TouchableOpacity style={ styles.button }>
+                    <Image source={like} />
+                </TouchableOpacity>
+            </View>
         </SafeAreaView>
     )
 }
@@ -99,6 +109,29 @@ const styles = StyleSheet.create({
         color: '#999',
         marginTop: 5,
         lineHeight: 18,
+    },
+
+    buttonContainer: {
+        flexDirection: 'row',
+        marginBottom: 100,
+    },
+
+    button: {
+        width: 50,
+        height: 50,
+        borderRadius: 25,
+        backgroundColor: '#FFF',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginHorizontal: 15,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOpacity: 0.05,
+        shadowRadius: 2,
+        shadowOffset: {
+            width: 2,
+            height: 2,
+        }
     }
 })
 
