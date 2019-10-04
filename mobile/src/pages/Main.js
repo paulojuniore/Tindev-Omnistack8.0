@@ -77,15 +77,17 @@ const Main = ({ navigation }) => {
                     )    
                 ))}
             </View>
-
-            <View style={ styles.buttonContainer }>
-                <TouchableOpacity onPress={handleDislike} style={ styles.button }>
-                    <Image source={dislike} />
-                </TouchableOpacity>
-                <TouchableOpacity onPress={handleLike} style={ styles.button }>
-                    <Image source={like} />
-                </TouchableOpacity>
-            </View>
+            
+            { users.length > 0 && (
+                <View style={ styles.buttonContainer }>
+                    <TouchableOpacity onPress={handleDislike} style={ styles.button }>
+                        <Image source={dislike} />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={handleLike} style={ styles.button }>
+                        <Image source={like} />
+                    </TouchableOpacity>
+                </View>
+            )}
         </SafeAreaView>
     )
 }
