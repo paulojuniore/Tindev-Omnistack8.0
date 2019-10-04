@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import AsyncStorage from '@react-native-community/async-storage'
 import { 
     View, 
     SafeAreaView, 
@@ -48,34 +49,31 @@ const Main = ({ navigation }) => {
         setUsers(users.filter(user => user._id !== id))
     }
 
+    async function handleLogout() {
+        await AsyncStorage.clear()
+        navigation.navigate('Login')
+    }
+
     return (
         <SafeAreaView style={styles.container}>
-            <Image style={styles.logo} source={logo} />
+            <TouchableOpacity onPress={handleLogout}>
+                <Image style={styles.logo} source={logo} />
+            </TouchableOpacity>
 
             <View style={styles.cardsContainer}>
-                <View style={[styles.card, { zIndex: 3 }]}>
-                    <Image style={styles.avatar} source={{uri: 'https://avatars2.githubusercontent.com/u/34824189?v=4'}} />
-                    <View style={styles.footer}>
-                        <Text style={styles.name}>Paulo Júnior</Text>
-                        <Text style={styles.bio} numberOfLines={3}>Computer Science Student at UFCG.</Text>
-                    </View>
-                </View>
-
-                <View style={[styles.card, { zIndex: 2 }]}>
-                    <Image style={styles.avatar} source={{uri: 'https://avatars2.githubusercontent.com/u/34824189?v=4'}} />
-                    <View style={styles.footer}>
-                        <Text style={styles.name}>Paulo Júnior</Text>
-                        <Text style={styles.bio} numberOfLines={3}>Computer Science Student at UFCG.</Text>
-                    </View>
-                </View>
-
-                <View style={[styles.card, { zIndex: 1 }]}>
-                    <Image style={styles.avatar} source={{uri: 'https://avatars2.githubusercontent.com/u/34824189?v=4'}} />
-                    <View style={styles.footer}>
-                        <Text style={styles.name}>Paulo Júnior</Text>
-                        <Text style={styles.bio} numberOfLines={3}>Computer Science Student at UFCG.</Text>
-                    </View>
-                </View>
+                { users.length === 0 
+                    ? <Text style={styles.empty}>Acabou :(</Text>
+                    : (
+                        users.map((user, index) => (
+                        <View key={user._id} style={[styles.card, { zIndex: users.length - index }]}>
+                            <Image style={styles.avatar} source={ {uri: user.avatar} } />
+                            <View style={styles.footer}>
+                                <Text style={styles.name}>{ user.name }</Text>
+                                <Text style={styles.bio} numberOfLines={3}>{ user.bio }</Text>
+                            </View>
+                        </View>
+                    )    
+                ))}
             </View>
 
             <View style={ styles.buttonContainer }>
@@ -167,6 +165,13 @@ const styles = StyleSheet.create({
             width: 2,
             height: 2,
         }
+    },
+
+    empty: {
+        textAlign: 'center',
+        fontSize: 20,
+        color: '#808080',
+        fontWeight: 'bold',
     }
 })
 
