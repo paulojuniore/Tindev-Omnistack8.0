@@ -27,7 +27,6 @@ const App = ({ navigation }) => {
     async function handleLogin() {
         const response = await api.post('/devs', { username: user })
         const { _id } = response.data
-        console.log(_id)
         await AsyncStorage.setItem('user', _id)
         navigation.navigate('Main', { user: _id })
     }
